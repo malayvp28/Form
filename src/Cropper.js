@@ -66,7 +66,7 @@ const [text,setText]=useState("");
  const videoConstraints = {
   width: 1280,
   height: 720,
-  facingMode: "user"
+  facingMode: { exact: "environment" }
 };
 
 const webcamRef = react.useRef(null);
@@ -109,8 +109,8 @@ const camClose=()=>{
              <div>
         {
             imgeStatus &&
-            ( <div>
-                <ReactCrop src={src} onImageLoaded={setImage} crop={crop} onChange={setCrop} style={{marginTop:5}}/>
+            ( <div style={{height:20,width:10}}>
+                <ReactCrop src={src}  onImageLoaded={setImage} crop={crop} onChange={setCrop} style={{marginTop:5}}/>
                 <br/>
                
             </div>
