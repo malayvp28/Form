@@ -62,7 +62,8 @@ const [text,setText]=useState("");
   setText("Loading")
   Tesseract.recognize(result, 
     'eng',
-    { logger: m => console.log(m) }
+    { logger: m => setText(m['status'])}
+    
   )
   .catch(err => {
     console.error(err)
