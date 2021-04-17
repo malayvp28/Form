@@ -66,6 +66,7 @@ const [text,setText]=useState("");
   )
   .catch(err => {
     console.error(err)
+    setText(err)
   })
   .then(({ data: { text } }) => {
     console.log(text);
@@ -175,7 +176,7 @@ const camClose=()=>{
       Click1
       </Button>
       <Button variant="contained" color="primary" onClick={front}>User</Button>
-      <Button variant="contained" color="primary" onClick={back}>En</Button>
+      <Button variant="contained" color="primary" onClick={back}>Environment</Button>
       </div>
       }
 
