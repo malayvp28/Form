@@ -59,7 +59,7 @@ const [text,setText]=useState("");
  setMode("environment")
  }
  const showresult=()=>{
-
+  setText("Loading")
   Tesseract.recognize(result, 
     'eng',
     { logger: m => console.log(m) }
