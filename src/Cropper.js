@@ -1,6 +1,6 @@
 import react ,{useState} from 'react';
 import 'react-image-crop/dist/ReactCrop.css';
-import Tesseract from 'tesseract.js';
+import {createWorker} from 'tesseract.js';
 import ReactCrop from 'react-image-crop';
 import Webcam from "react-webcam";
 import { Button} from '@material-ui/core';
@@ -58,21 +58,16 @@ const [text,setText]=useState("");
 
  setMode("environment")
  }
- const showresult=()=>{
+ const worker = createWorker({
+  logger: m => setText(m['status']),
+});
+ const showresult= async ()=>{
   setText("Loading")
-  Tesseract.recognize(result, 
-    'eng',
-    { logger: m => setText(m['status'])}
-    
-  )
-  .catch(err => {
-    console.error(err)
-    setText(err)
-  })
-  .then(({ data: { text } }) => {
-    console.log(text);
-    setText(text);
-  })
+  await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    const { data: { text } } = await worker.recognize(result);
+    setText(text)
  }
 
  const videoConstraints = {
