@@ -64,9 +64,9 @@ const [text,setText]=useState("");
   })
  }
  const videoConstraints = {
-  width: 1280,
-  height: 720,
-  facingMode: { exact: "environment" }
+  width: 500,
+  height: 500,
+  facingMode: "environment" 
 };
 
 const webcamRef = react.useRef(null);
