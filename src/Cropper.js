@@ -4,6 +4,7 @@ import Tesseract from 'tesseract.js';
 import ReactCrop from 'react-image-crop';
 import Webcam from "react-webcam";
 import { Button} from '@material-ui/core';
+
 const Cropper =()=>{
 const [crop,setCrop]=useState(
      {
@@ -49,6 +50,14 @@ const [text,setText]=useState("");
     setresult(true);
 
  }
+ const [mode,setMode]=useState("user");
+ const front=()=>{
+  setMode("user")
+ }
+ const back=()=>{
+
+ setMode("environment")
+ }
  const showresult=()=>{
 
   Tesseract.recognize(result, 
@@ -63,10 +72,11 @@ const [text,setText]=useState("");
     setText(text);
   })
  }
+
  const videoConstraints = {
   width: 500,
   height: 500,
-  facingMode: "environment" 
+  facingMode:mode
 };
 
 const webcamRef = react.useRef(null);
@@ -75,13 +85,14 @@ const [src,setSrc]=useState(null);
 const capture = react.useCallback(
   () => {
    const  imageSrc = webcamRef.current.getScreenshot();
+    
     setSrc(imageSrc);
     setStatus(true);
     setCam(false);
     setcrop(true);
     setOpen(true);
     
-    console.log("cap")
+    console.log("cap",imageSrc)
   },
 
   [webcamRef]
@@ -94,7 +105,7 @@ const camOpen=()=>{
   setcrop(false);
   setresult(false);
   setText("");
-  setImage(null);
+  
   setStatus(false);
   SetResult(null)
   
@@ -109,8 +120,9 @@ const camClose=()=>{
              <div>
         {
             imgeStatus &&
-            ( <div style={{height:20,width:10}}>
+            ( <div style={{marginLeft:'20%',width:"60%"}}>
                 <ReactCrop src={src}  onImageLoaded={setImage} crop={crop} onChange={setCrop} style={{marginTop:5}}/>
+                
                 <br/>
                
             </div>
@@ -159,9 +171,13 @@ const camClose=()=>{
        
      
       { camStatus &&
-      <Button variant="contained" color="primary" style={{width:'100px',marginLeft:5}} onClick={capture}>
-      Click
-      </Button>}
+      <div><Button variant="contained" color="primary" style={{width:'100px',marginLeft:5}} onClick={capture}>
+      Click1
+      </Button>
+      <Button variant="contained" color="primary" onClick={front}>User</Button>
+      <Button variant="contained" color="primary" onClick={back}>En</Button>
+      </div>
+      }
 
       </div>
            
